@@ -10,14 +10,16 @@
 //     console.log(response);
 
 // });
-// $.ajax({
-//     url: "https://api.ipgeolocation.io/astronomy?apiKey=b9f0ccb9168647e7a0ffc452ac116e43",
-//     method: "GET",
+//http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={APIKEY}
+var weatherKey="40d4a57683aeb7e88b7acf955c82d2a6";
+$.ajax({
+    url: "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID="+ weatherKey,
+    method: "GET",
 
-// }).then((response)=>{
-//     console.log(response);
+}).then((response)=>{
+    console.log(response);
 
-// });
+});
 var map = L.map('mapid', {
     center: [51.505, -0.09],
     zoom: 13
