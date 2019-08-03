@@ -1,1 +1,5 @@
-#mapid { height: 180px; }
+.container{
+    background-color: white;
+    height: 100%;
+    width: 100%;
+}
