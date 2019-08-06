@@ -21,7 +21,7 @@ $.ajax({
 
 });
 var map = L.map('map', {
-    center: [51.505, -0.09],
+    center: [29.7602, -95.3694],
     zoom: 13
 });
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -30,3 +30,18 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     id: 'mapbox.streets',
     accessToken: 'pk.eyJ1IjoibWVhdHNoaWVsZG1hbiIsImEiOiJjanl2cnRvanAwZXVkM2NvYm16MzRzdXB4In0.c0UspdiYTGPjlbOdWti3ww'
 }).addTo(map);
+
+var popup = L.popup();
+var latitude;
+var longitude;
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map);
+        console.log(e.latlng);
+        latitude=e.latlng.lat;
+        longitude=e.latlng.lng;
+}
+
+map.on('click', onMapClick);
