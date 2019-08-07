@@ -61,7 +61,7 @@ function getForecast(lat, lon){
 function displayForecast(clouds, wind, temp){
     
     let tempInF = Math.round((temp-273.15)*9/5+32);
-    let tempInC = temp - 237;
+    let tempInC = Math.round(temp - 237);
     let windDirection = findWindDirection(wind.deg);
     
     let weatherContainer = $('<div class="weather-div">');
