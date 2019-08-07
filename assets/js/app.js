@@ -24,6 +24,8 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: 'pk.eyJ1IjoibWVhdHNoaWVsZG1hbiIsImEiOiJjanl2cnRvanAwZXVkM2NvYm16MzRzdXB4In0.c0UspdiYTGPjlbOdWti3ww'
 }).addTo(map);
 
+L.Control.geocoder().addTo(map);
+
 var popup = L.popup();
 var latitude;
 var longitude;
