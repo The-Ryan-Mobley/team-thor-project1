@@ -29,13 +29,23 @@ $.ajax({
     method:"GET",
 }).then((response)=>{
     console.log(response);
+    GetSunMoon(response.sunrise,response.sunset,response.moonrise,response.moonset);
+    //get sunrise/sunset
 
 });
 }
+function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
+    let riseHolder = $('<div>');
+    let sunRiseDOM = $('<div>');
+    let sunSetDOM = $('<div>');
+    let moonRiseDOM = $('<div>');
+    let moonSetDOM = $('<div>');
 
+    
+}
 function getForecast(lat, lon){
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&APPID="+ weatherKey,
+        url: "https://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&APPID="+ weatherKey,
         method: "GET",
     
     }).then((response)=>{
@@ -102,7 +112,7 @@ function findWindDirection(windDeg){
 
 function getskyImage(long, time){
     let skyhours = long/15;
-    let skyqueryurl = "http://server1.sky-map.org/skywindow?ra="+skyhours+" 00 00&de="+long+" 00 00&zoom=4";
+    let skyqueryurl = "https://server1.sky-map.org/skywindow?ra="+skyhours+" 00 00&de="+long+" 00 00&zoom=4";
     let skyimg = $("<IFRAME SRC='"+skyqueryurl+" WIDTH=400 HEIGHT=320' WIDTH=400 HEIGHT=320>    </IFRAME>");
     $("#sky-images").empty();
     $("#sky-images").append(skyimg);
