@@ -101,7 +101,8 @@ function findWindDirection(windDeg){
 }
 
 function getskyImage(long, time){
-    let skyqueryurl = "http://server1.sky-map.org/skywindow?ra=00 42 32&de="+long+" 00 00&zoom=4";
+    let skyhours = long/15;
+    let skyqueryurl = "http://server1.sky-map.org/skywindow?ra="+skyhours+" 00 00&de="+long+" 00 00&zoom=4";
     let skyimg = $("<IFRAME SRC='"+skyqueryurl+" WIDTH=400 HEIGHT=320' WIDTH=400 HEIGHT=320>    </IFRAME>");
     $("#sky-images").empty();
     $("#sky-images").append(skyimg);
@@ -119,6 +120,8 @@ function onMapClick(e) {
         getForecast(latitude.toString(),longitude.toString());
         getskyImage(longitude, "time");
         queryIPGeo();
+        getskyImage(longitude, latitude);
+
 }
 
 map.on('click', onMapClick);
