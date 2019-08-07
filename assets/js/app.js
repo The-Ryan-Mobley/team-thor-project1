@@ -2,15 +2,7 @@
 //https://ssd-api.jpl.nasa.gov/nhats.api
 //https://www.sky-map.org/?ra=18.5&de=40&zoom=3
 //http://server1.sky-map.org/skywindow.jsp?object=M100&zoom=8&img_source=SDSS
-// $.ajax({
-//     url: "https://ssd-api.jpl.nasa.gov/nhats.api",
-//     method: "GET",
 
-// }).then((response)=>{
-//     console.log(response);
-
-// });
-//http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={APIKEY}
 var weatherKey="40d4a57683aeb7e88b7acf955c82d2a6";
 
 var map = L.map('map', {
@@ -30,16 +22,27 @@ var popup = L.popup();
 var latitude;
 var longitude;
 
+function queryIPGeo(){
+    var geoKey= "b729dded76f84824b0ea13263979cd99";
+$.ajax({
+    url:"https://api.ipgeolocation.io/astronomy?apiKey="+geoKey+"&lat="+latitude.toString()+"&long="+longitude.toString(),
+    method:"GET",
+}).then((response)=>{
+    console.log(response);
+
+});
+}
+
 function getForecast(lat, lon){
     $.ajax({
         url: "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&APPID="+ weatherKey,
         method: "GET",
     
     }).then((response)=>{
-        console.log(response);
         //response.list[0] for todays weather
         let reArray = response.list[0];
         //every 12 hours for 3 days
+        $('#weather-feed').empty();
         displayForecast(reArray.weather[0].description,reArray.wind,reArray.main.temp);
 
     
@@ -61,9 +64,9 @@ function displayForecast(clouds, wind, temp){
     cloudDOM.appendTo(weatherContainer);
     windDOM.appendTo(weatherContainer);
     tempDOM.appendTo(weatherContainer);
-    cloudDOM.html(clouds.toString());
-    windDOM.html('wind direction: '+windDirection);
-    tempDOM.html(tempInF.toString()+'F');
+    cloudDOM.html("Tonights Weather: "+ clouds.toString());
+    windDOM.html('Wind Direction: '+windDirection+"<br>Wind Speed: "+ wind.speed+" MPH");
+    tempDOM.html(tempInF.toString()+' \u00B0 F <br>'+tempInC.toString()+'\u00B0 C');
     
 
 }
@@ -115,6 +118,10 @@ function onMapClick(e) {
         longitude=e.latlng.lng;
         getForecast(latitude.toString(),longitude.toString());
         getskyImage(longitude, "time");
+        queryIPGeo();
 }
 
 map.on('click', onMapClick);
+
+
+
