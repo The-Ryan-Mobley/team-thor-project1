@@ -36,32 +36,63 @@ function getForecast(lat, lon){
     }).then((response)=>{
         console.log(response);
         //response.list[0] for todays weather
+        let reArray = response.list[0];
+        //every 12 hours for 3 days
+        displayForecast(reArray.weather[0].description,reArray.wind,reArray.main.temp);
 
     
     });
 }
-function displayForecast(clouds, wind, temp,rain){
-    tempInF = 9/5(temp-237)+32;
-    temoInC = temp - 237;
+function displayForecast(clouds, wind, temp){
+    
+    let tempInF = Math.round((temp-273.15)*9/5+32);
+    let tempInC = temp - 237;
+    let windDirection = findWindDirection(wind.deg);
+    
     let weatherContainer = $('<div class="weather-div">');
     let cloudDOM = $('<div class="weather-cell">');
-    let windDOM = $('<div class="weather-cell"');
+    let windDOM = $('<div class="weather-cell">');
     let tempDOM = $('<div class="weather-cell">');
-    let rainDOM = $('<div class="weather-cell">');
+   
+    weatherContainer.prependTo($('#weather-feed'));
+    
+    cloudDOM.appendTo(weatherContainer);
+    windDOM.appendTo(weatherContainer);
+    tempDOM.appendTo(weatherContainer);
+    cloudDOM.html(clouds.toString());
+    windDOM.html('wind direction: '+windDirection);
+    tempDOM.html(tempInF.toString()+'F');
+    
 
 }
 function findWindDirection(windDeg){
     let directions=['N','S','E','W','NE','NW','SE','SW'];
     let windDirection = "";
-    if((windDeg >= 340) || (windDeg <= 30)){
+    if((windDeg >= 335.5) || (windDeg <= 22.5)){
         windDirection = directions[0];
     }
-    else if((windDeg > 30)&&(windDeg <= 60)){
+    else if((windDeg > 22.5)&&(windDeg <= 67.5)){
         windDirection = directions[4];
     }
-    else if((windDeg > 60)&&(windDeg <= 60))
+    else if((windDeg > 67.5)&&(windDeg <= 112.5)){
+        windDirection = directions[2];
+    }
+    else if((windDeg > 112.5)&&(windDeg <= 157.5)){
+        windDirection = directions[6];
+    }
+    else if((windDeg > 157.5)&&(windDeg <= 202.5)){
+        windDirection = directions[1];
+    }
+    else if((windDeg > 202.5)&&(windDeg <= 247.5)){
+        windDirection = directions[7];
+    }
+    else if((windDeg > 247.5)&&(windDeg <= 295.5)){
+        windDirection = directions[3];
+    }
+    else if((windDeg > 295.5)&&(windDeg <= 335.5)){
+        windDirection = directions[5];
+    }
     return windDirection;
-    
 }
 
 
