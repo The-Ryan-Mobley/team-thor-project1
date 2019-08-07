@@ -69,7 +69,7 @@ function findWindDirection(windDeg){
 function getskyImage(long, time){
     let skyqueryurl = "http://server1.sky-map.org/skywindow?ra=00 42 32&de="+long+" 00 00&zoom=4";
     let skyimg = $("<IFRAME SRC='"+skyqueryurl+" WIDTH=400 HEIGHT=320' WIDTH=400 HEIGHT=320>    </IFRAME>");
-    $("#sky-image").empty();
+    $("#sky-images").empty();
     $("#sky-images").append(skyimg);
 }
 
