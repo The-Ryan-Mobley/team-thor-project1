@@ -69,10 +69,11 @@ function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
     let sunSetDOM = $('<div>');
     let moonRiseDOM = $('<div>');
     let moonSetDOM = $('<div>');
+  
+}
 
     
 }
-
 function getForecast(lat, lon){
     $.ajax({
         url: "https://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&APPID="+ weatherKey,
