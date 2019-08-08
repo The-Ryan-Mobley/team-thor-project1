@@ -22,7 +22,6 @@ var latitude;
 var longitude;
 var siderealTime;
 
-
 var searchControl=L.Control.geocoder({
     defaultMarkGeocode: false
   }).on('markgeocode', function(e) {
@@ -52,6 +51,27 @@ function queryUSNO(lat,lng){
         siderealTime[siderealTime.length-1]=Math.floor(Number(siderealTime[siderealTime.length-1])).toString();
     });
 };
+function queryIPGeo(){
+    var geoKey= "b729dded76f84824b0ea13263979cd99";
+$.ajax({
+    url:"https://api.ipgeolocation.io/astronomy?apiKey="+geoKey+"&lat="+latitude.toString()+"&long="+longitude.toString(),
+    method:"GET",
+}).then((response)=>{
+    console.log(response);
+    GetSunMoon(response.sunrise,response.sunset,response.moonrise,response.moonset);
+    //get sunrise/sunset
+
+});
+}
+function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
+    let riseHolder = $('<div>');
+    let sunRiseDOM = $('<div>');
+    let sunSetDOM = $('<div>');
+    let moonRiseDOM = $('<div>');
+    let moonSetDOM = $('<div>');
+
+    
+}
 
 function getForecast(lat, lon){
     $.ajax({
@@ -141,7 +161,7 @@ function onMapClick(e) {
         longitude=e.latlng.lng;
         getForecast(latitude.toString(),longitude.toString());
         getskyImage(longitude, "time");
-        //queryIPGeo();
+        queryIPGeo();
 
 }
 
