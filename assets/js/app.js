@@ -22,20 +22,10 @@ var popup = L.popup();
 var latitude;
 var longitude;
 
-function queryIPGeo(){
-    var geoKey= "b729dded76f84824b0ea13263979cd99";
-$.ajax({
-    url:"https://api.ipgeolocation.io/astronomy?apiKey="+geoKey+"&lat="+latitude.toString()+"&long="+longitude.toString(),
-    method:"GET",
-}).then((response)=>{
-    console.log(response);
-
-});
-}
 
 function getForecast(lat, lon){
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&APPID="+ weatherKey,
+        url: "https://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&APPID="+ weatherKey,
         method: "GET",
     
     }).then((response)=>{
@@ -51,7 +41,7 @@ function getForecast(lat, lon){
 function displayForecast(clouds, wind, temp){
     
     let tempInF = Math.round((temp-273.15)*9/5+32);
-    let tempInC = temp - 237;
+    let tempInC = Math.round(temp - 237);
     let windDirection = findWindDirection(wind.deg);
     
     let weatherContainer = $('<div class="weather-div">');
@@ -102,7 +92,7 @@ function findWindDirection(windDeg){
 
 function getskyImage(long, time){
     let skyhours = long/15;
-    let skyqueryurl = "http://server1.sky-map.org/skywindow?ra="+skyhours+" 00 00&de="+long+" 00 00&zoom=4";
+    let skyqueryurl = "https://server1.sky-map.org/skywindow?ra="+skyhours+" 00 00&de="+long+" 00 00&zoom=4";
     let imgwidth = $("#sky-images").width();
     console.log(imgwidth);
     let skyimg = $("<IFRAME SRC='"+skyqueryurl+" WIDTH="+imgwidth+" HEIGHT="+(imgwidth*4)/5+"' WIDTH="+imgwidth+" HEIGHT="+(imgwidth*4)/5+">    </IFRAME>");
@@ -121,8 +111,7 @@ function onMapClick(e) {
         longitude=e.latlng.lng;
         getForecast(latitude.toString(),longitude.toString());
         getskyImage(longitude, "time");
-        queryIPGeo();
-        getskyImage(longitude, latitude);
+        //queryIPGeo();
 
 }
 
