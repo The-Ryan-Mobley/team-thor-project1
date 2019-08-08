@@ -16,12 +16,42 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: 'pk.eyJ1IjoibWVhdHNoaWVsZG1hbiIsImEiOiJjanl2cnRvanAwZXVkM2NvYm16MzRzdXB4In0.c0UspdiYTGPjlbOdWti3ww'
 }).addTo(map);
 
-L.Control.geocoder().addTo(map);
 
 var popup = L.popup();
 var latitude;
 var longitude;
+var siderealTime;
 
+
+var searchControl=L.Control.geocoder({
+    defaultMarkGeocode: false
+  }).on('markgeocode', function(e) {
+      console.log(e)
+        popup
+        .setLatLng(e.geocode.center)
+        .setContent("You searched for " + e.geocode.name + " at coordinates " + e.geocode.center.toString())
+        .openOn(map);
+        console.log(e.geocode.center);
+        latitude=e.geocode.center.lat;
+        longitude=e.geocode.center.lng;
+        map.setView([latitude,longitude],10);
+        getForecast(latitude.toString(),longitude.toString());
+        getskyImage(longitude, "time");
+        queryIPGeo();
+        getskyImage(longitude, latitude);
+
+  }).addTo(map);
+
+
+function queryUSNO(lat,lng){
+    $.ajax({
+        url: "https://api.usno.navy.mil/sidtime?date=today&coords="+ lat + ","+ lng + "&time=now",
+        method:"GET"
+    }).then(function(response){
+        siderealTime=response.properties.data[0].last.split(":");
+        siderealTime[siderealTime.length-1]=Math.floor(Number(siderealTime[siderealTime.length-1])).toString();
+    });
+};
 
 function getForecast(lat, lon){
     $.ajax({
