@@ -4,10 +4,15 @@
 //http://server1.sky-map.org/skywindow.jsp?object=M100&zoom=8&img_source=SDSS
 
 var weatherKey="40d4a57683aeb7e88b7acf955c82d2a6";
+var popup = L.popup();
+var latitude=29.7602;
+var longitude=-95.3694;
+var siderealTime;
+
 
 var map = L.map('map', {
-    center: [29.7602, -95.3694],
-    zoom: 13
+    center: [latitude, longitude],
+    zoom: 10
 });
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -16,11 +21,21 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: 'pk.eyJ1IjoibWVhdHNoaWVsZG1hbiIsImEiOiJjanl2cnRvanAwZXVkM2NvYm16MzRzdXB4In0.c0UspdiYTGPjlbOdWti3ww'
 }).addTo(map);
 
+popup
+.setLatLng([latitude,longitude])
+.setContent("Houston is at " + map.getCenter().toString())
+.openOn(map);
 
-var popup = L.popup();
-var latitude;
-var longitude;
-var siderealTime;
+function populatePage(){
+    getForecast(latitude.toString(),longitude.toString());
+    queryIPGeo();
+    queryUSNO(latitude, longitude);
+};
+
+
+populatePage();
+
+
 
 var searchControl=L.Control.geocoder({
     defaultMarkGeocode: false
@@ -34,10 +49,7 @@ var searchControl=L.Control.geocoder({
         latitude=e.geocode.center.lat;
         longitude=e.geocode.center.lng;
         map.setView([latitude,longitude],10);
-        getForecast(latitude.toString(),longitude.toString());
-        getskyImage(longitude, "time");
-        queryIPGeo();
-        queryUSNO(latitude, longitude);
+        populatePage();
 
   }).addTo(map);
 
@@ -230,9 +242,8 @@ function onMapClick(e) {
         console.log(e.latlng);
         latitude=e.latlng.lat;
         longitude=e.latlng.lng;
-        getForecast(latitude.toString(),longitude.toString());
-        queryIPGeo();
-        queryUSNO(latitude, longitude);       
+        map.setView([latitude,longitude],10);
+        populatePage();    
 
 }
 
