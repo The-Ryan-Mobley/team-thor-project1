@@ -64,12 +64,52 @@ $.ajax({
 
 });
 }
+function ConvertGeoTime(timestring){
+    let standardHour = 0;
+    let standardTime = "";
+    let meridian = "";
+    let numone = timestring.substr(0,2);
+    let extra = timestring.substr(2,3);
+    let uno = parseInt(numone, 10);
+    if( uno > 12){
+        standardHour = uno-12;
+        meridian = "PM";
+    }
+    else{
+        standardHour = uno;
+        meridian = "AM";
+    }
+    standardTime = [standardHour.toString() + extra + " " + meridian];
+    return standardTime;
+
+
+    
+}
 function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
-    let riseHolder = $('<div>');
+    let sunUpStandard = ConvertGeoTime(SunRise);
+    let sunDownStandard = ConvertGeoTime(SunSet);
+    let moonUp = ConvertGeoTime(MoonRise);
+    let moonDown = ConvertGeoTime(MoonSet);
+
+    $('#lunar-feed').empty();
+
+    let riseHolder = $('<div class = "weather-div">');
     let sunRiseDOM = $('<div>');
     let sunSetDOM = $('<div>');
     let moonRiseDOM = $('<div>');
     let moonSetDOM = $('<div>');
+
+
+    riseHolder.appendTo($('#lunar-feed'));
+    sunRiseDOM.appendTo(riseHolder);
+    sunSetDOM.appendTo(riseHolder);
+    moonRiseDOM.appendTo(riseHolder);
+    moonSetDOM.appendTo(riseHolder);
+
+    sunRiseDOM.html("Sun rose at: "+ sunUpStandard);
+    sunSetDOM.html("Sun sets at: "+sunDownStandard);
+    moonRiseDOM.html("Moon rises at: "+moonUp);
+    moonSetDOM.html("Moon sets at: "+moonDown);
   
 }
 
