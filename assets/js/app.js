@@ -82,12 +82,13 @@ function ConvertGeoTime(timestring){
     let meridian = "";
     let numone = timestring.substr(0,2);
     let extra = timestring.substr(2,3);
+    console.log(timestring,numone,extra);
     let uno = parseInt(numone, 10);
-    if(uno = 12){
+    if(uno === 12){
         standardHour = uno;
         meridian = "PM";
     }
-    else if(uno = 0){
+    else if(uno === 0){
         standardHour = 12;
         meridian = "AM";
 
