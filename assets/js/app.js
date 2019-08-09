@@ -249,5 +249,19 @@ function onMapClick(e) {
 
 map.on('click', onMapClick);
 
-
+$("#user-btn").click(function(event){
+    event.preventDefault();
+    let tempDate = $("#user-date").val().trim();
+    tempDate = parseInt(tempDate);
+    if(tempDate>=5){
+        console.log("MODAL TIME");
+        $('.modal').modal();
+        $('.modal').modal('open');
+    }
+    else if(tempDate<5){
+        userDate = tempDate;
+        $("#user-date").val('');
+    }
+    
+});
 
