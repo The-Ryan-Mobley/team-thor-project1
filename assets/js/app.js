@@ -92,7 +92,7 @@ function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
     let moonDown = ConvertGeoTime(MoonSet);
 
     $('#lunar-feed').empty();
-
+    let moonPic=$("<img src='https://api.usno.navy.mil/imagery/moon.png?date=today' class='responsive-img'>");
     let riseHolder = $('<div class = "weather-div">');
     let sunRiseDOM = $('<div>');
     let sunSetDOM = $('<div>');
@@ -101,6 +101,7 @@ function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
 
 
     riseHolder.appendTo($('#lunar-feed'));
+    moonPic.appendTo(riseHolder);
     sunRiseDOM.appendTo(riseHolder);
     sunSetDOM.appendTo(riseHolder);
     moonRiseDOM.appendTo(riseHolder);
