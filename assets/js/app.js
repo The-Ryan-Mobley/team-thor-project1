@@ -9,11 +9,11 @@ var latitude=29.7602;
 var longitude=-95.3694;
 var siderealTime;
 
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
-today = mm + '/' + dd + '/' + yyyy;
+var userDate = new Date();
+var dd = String(userDate.getDate()).padStart(2, '0');
+var mm = String(userDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = userDate.getFullYear();
+ userDate = mm + '/' + dd + '/' + yyyy;
 
 
 
@@ -155,7 +155,8 @@ function getForecast(lat, lon){
         let counter = 0;
         for(let i=1; i < 6; i++){
             let day = response.list[counter];
-            displayForecast(day.weather[0].description,day.wind,day.main.temp,day.clouds.dt_txt,i);
+            
+            displayForecast(day.weather[0].description,day.wind,day.main.temp,day.dt_txt,i);
             counter+=8;
         }
     });
