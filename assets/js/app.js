@@ -71,7 +71,16 @@ function ConvertGeoTime(timestring){
     let numone = timestring.substr(0,2);
     let extra = timestring.substr(2,3);
     let uno = parseInt(numone, 10);
-    if( uno > 12){
+    if(uno = 12){
+        standardHour = uno;
+        meridian = "PM";
+    }
+    else if(uno = 0){
+        standardHour = 12;
+        meridian = "AM";
+
+    }
+    else if( uno > 12){
         standardHour = uno-12;
         meridian = "PM";
     }
@@ -92,12 +101,21 @@ function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
     let moonDown = ConvertGeoTime(MoonSet);
 
     $('#lunar-feed').empty();
+<<<<<<< Updated upstream
     let moonPic=$("<img src='https://api.usno.navy.mil/imagery/moon.png?date=today' class='responsive-img'>");
     let riseHolder = $('<div class = "weather-div">');
     let sunRiseDOM = $('<div>');
     let sunSetDOM = $('<div>');
     let moonRiseDOM = $('<div>');
     let moonSetDOM = $('<div>');
+=======
+
+    const riseHolder = $('<div class = "weather-div">');
+    const sunRiseDOM = $('<div>');
+    const sunSetDOM = $('<div>');
+    const moonRiseDOM = $('<div>');
+    const moonSetDOM = $('<div>');
+>>>>>>> Stashed changes
 
 
     riseHolder.appendTo($('#lunar-feed'));
@@ -121,25 +139,42 @@ function getForecast(lat, lon){
         method: "GET",
     
     }).then((response)=>{
+        console.log(response);
         //response.list[0] for todays weather
-        let reArray = response.list[0];
-        //every 12 hours for 3 days
+        //make array of nights and push
+        //let days=[];
         $('#weather-feed').empty();
-        displayForecast(reArray.weather[0].description,reArray.wind,reArray.main.temp);
+        let counter = 0;
+        for(let i=1; i < 6; i++){
+            let day = response.list[counter];
+            displayForecast(day.weather[0].description,day.wind,day.main.temp,i);
+            counter+=8;
+
+        }
+        // let NightOne = response.list[0];
+        // let NightTwo= response.list[8];
+        // let NightThree = response.list[16];
+        //every 12 hours for 3 days
+        
+        // displayForecast(reArray.weather[0].description,reArray.wind,reArray.main.temp,1);
+        // displayForecast(nextDay.weather[0].description,nextDay.wind,nextDay.main.temp,2);
+        // displayForecast(dayThree.weather[0].description,dayThree.wind,dayThree.main.temp,3);
+
+        
 
     
     });
 }
-function displayForecast(clouds, wind, temp){
+function displayForecast(clouds, wind, temp, day){
     
     let tempInF = Math.round((temp-273.15)*9/5+32);
     let tempInC = Math.round(temp - 273);
     let windDirection = findWindDirection(wind.deg);
     
-    let weatherContainer = $('<div class="weather-div">');
-    let cloudDOM = $('<div class="weather-cell">');
-    let windDOM = $('<div class="weather-cell">');
-    let tempDOM = $('<div class="weather-cell">');
+    const weatherContainer = $('<div class="weather-div">');
+    const cloudDOM = $('<div class="weather-cell">');
+    const windDOM = $('<div class="weather-cell">');
+    const tempDOM = $('<div class="weather-cell">');
    
     weatherContainer.prependTo($('#weather-feed'));
     
