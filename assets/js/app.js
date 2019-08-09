@@ -9,6 +9,13 @@ var latitude=29.7602;
 var longitude=-95.3694;
 var siderealTime;
 
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+today = mm + '/' + dd + '/' + yyyy;
+
+
 
 var map = L.map('map', {
     center: [latitude, longitude],
@@ -144,48 +151,39 @@ function getForecast(lat, lon){
     
     }).then((response)=>{
         console.log(response);
-        //response.list[0] for todays weather
-        //make array of nights and push
-        //let days=[];
         $('#weather-feed').empty();
         let counter = 0;
         for(let i=1; i < 6; i++){
             let day = response.list[counter];
-            displayForecast(day.weather[0].description,day.wind,day.main.temp,i);
+            displayForecast(day.weather[0].description,day.wind,day.main.temp,day.clouds.dt_txt,i);
             counter+=8;
-
         }
-        // let NightOne = response.list[0];
-        // let NightTwo= response.list[8];
-        // let NightThree = response.list[16];
-        //every 12 hours for 3 days
-        
-        // displayForecast(reArray.weather[0].description,reArray.wind,reArray.main.temp,1);
-        // displayForecast(nextDay.weather[0].description,nextDay.wind,nextDay.main.temp,2);
-        // displayForecast(dayThree.weather[0].description,dayThree.wind,dayThree.main.temp,3);
-
-        
-
-    
     });
 }
-function displayForecast(clouds, wind, temp, day){
+function displayForecast(clouds, wind, temp, day, counter){
     
     let tempInF = Math.round((temp-273.15)*9/5+32);
     let tempInC = Math.round(temp - 273);
     let windDirection = findWindDirection(wind.deg);
+    let date = day.substr(0,10);
     
     const weatherContainer = $('<div class="weather-div">');
     const cloudDOM = $('<div class="weather-cell">');
     const windDOM = $('<div class="weather-cell">');
     const tempDOM = $('<div class="weather-cell">');
    
-    weatherContainer.prependTo($('#weather-feed'));
+    weatherContainer.appendTo($('#weather-feed'));
     
     cloudDOM.appendTo(weatherContainer);
     windDOM.appendTo(weatherContainer);
     tempDOM.appendTo(weatherContainer);
-    cloudDOM.html("Tonights Weather: "+ clouds.toString());
+    if(counter === 1){
+        cloudDOM.html("Tonights Weather: "+ clouds.toString());
+    }
+    else{
+        cloudDOM.html("Weather for "+ date+": "+ clouds.toString());
+    }
+    
     windDOM.html('Wind Direction: '+windDirection+"<br>Wind Speed: "+ wind.speed+" MPH");
     tempDOM.html(tempInF.toString()+' \u00B0 F <br>'+tempInC.toString()+'\u00B0 C');
     
