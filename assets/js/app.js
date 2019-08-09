@@ -93,7 +93,7 @@ function getForecast(lat, lon){
 function displayForecast(clouds, wind, temp){
     
     let tempInF = Math.round((temp-273.15)*9/5+32);
-    let tempInC = Math.round(temp - 237);
+    let tempInC = Math.round(temp - 273);
     let windDirection = findWindDirection(wind.deg);
     
     let weatherContainer = $('<div class="weather-div">');
@@ -147,7 +147,7 @@ function getskyImage(srt, lat){
     let skyhours = srt[0];
     let skymins = srt[1];
     let skysecs = srt[2];
-    let skyqueryurl = "https://server1.sky-map.org/skywindow?ra="+skyhours+" "+skymins+" "+skysecs+"&de="+lat+" 00 00&zoom=4";
+    let skyqueryurl = "https://server1.sky-map.org/skywindow?ra="+skyhours+" "+skymins+" "+skysecs+"&de="+lat+" 00 00&zoom=8";
     let imgwidth = $("#sky-images").width();
     console.log(imgwidth);
     let skyimg = $("<IFRAME SRC='"+skyqueryurl+" WIDTH="+imgwidth+" HEIGHT="+(imgwidth*4)/5+"' WIDTH="+imgwidth+" HEIGHT="+(imgwidth*4)/5+">    </IFRAME>");
