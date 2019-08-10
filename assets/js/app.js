@@ -8,9 +8,9 @@ var popup = L.popup();
 var latitude=29.7602;
 var longitude=-95.3694;
 var siderealTime;
-var InputDate = new Date();
-var userDate = getTime(InputDate, 0);
-var dateindex = 1;
+var InputDate = new Date(); //used to manipulate date
+var userDate = getTime(InputDate, 0); //defaults to todays date
+var dateindex = 1; //index for 5 day forcast
 
 var map = L.map('map', {
     center: [latitude, longitude],
@@ -84,33 +84,29 @@ function queryUSNO(lat,lng){
         getskyImage(dummySRT, latitude);
     });
 };
-function queryIPGeo(){
+function queryIPGeo(){ //gets sun/moon rise/set based on date
     var geoDate = IpGeoDate(userDate);
     var geoKey= "b729dded76f84824b0ea13263979cd99";
 $.ajax({
     url:"https://api.ipgeolocation.io/astronomy?apiKey="+geoKey+"&lat="+latitude.toString()+"&long="+longitude.toString()+"&date="+geoDate,
     method:"GET",
 }).then((response)=>{
-    console.log(response);
     GetSunMoon(response.sunrise,response.sunset,response.moonrise,response.moonset);
-    //get sunrise/sunset
-
 });
 }
-function IpGeoDate(d){
+function IpGeoDate(d){ //converts date into YYYY-MM-DD format for the IPGeo API
     let yyyy = d.substr(6,4);
     let dd = d.substr(3,2);
     let mm = d.substr(0,2);
     let convertedDate = yyyy + '-' + mm + '-' + dd;
     return convertedDate;
 }
-function ConvertGeoTime(timestring){
+function ConvertGeoTime(timestring){ //gets lunar time to display
     let standardHour = 0;
     let standardTime = "";
     let meridian = "";
     let numone = timestring.substr(0,2);
     let extra = timestring.substr(2,3);
-    console.log(timestring,numone,extra);
     let uno = parseInt(numone, 10);
     if(uno === 12){
         standardHour = uno;
@@ -132,7 +128,7 @@ function ConvertGeoTime(timestring){
     standardTime = [standardHour.toString() + extra + " " + meridian];
     return standardTime;
 }
-function getTime(d, i){
+function getTime(d, i){ //gets the date in MM/DD/YYYY format (chosen because thats UNSO's date format)
     let dd = String(d.getDate() + i).padStart(2, '0');
     let mm = String(d.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = d.getFullYear();
@@ -140,19 +136,17 @@ function getTime(d, i){
     return userDate;
 
 }
-function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
+function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){  //appends lunar information
     let sunUpStandard = ConvertGeoTime(SunRise);
     let sunDownStandard = ConvertGeoTime(SunSet);
     let moonUp = ConvertGeoTime(MoonRise);
     let moonDown = ConvertGeoTime(MoonSet);
-
 
     let riseHolder = $('<div class = "weather-div">');
     let sunRiseDOM = $('<div>');
     let sunSetDOM = $('<div>');
     let moonRiseDOM = $('<div>');
     let moonSetDOM = $('<div>');
-
 
     riseHolder.appendTo($('#lunar-feed'));
     sunRiseDOM.appendTo(riseHolder);
@@ -163,29 +157,25 @@ function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
     sunRiseDOM.html("Sun rose at: "+ sunUpStandard);
     sunSetDOM.html("Sun sets at: "+sunDownStandard);
     moonRiseDOM.html("Moon rises at: "+moonUp);
-    moonSetDOM.html("Moon sets at: "+moonDown);
-  
+    moonSetDOM.html("Moon sets at: "+moonDown);  
 }
 
-    
-function getForecast(lat, lon){
+function getForecast(lat, lon){ //gets and displays the 5 day forcast
     $.ajax({
         url: "https://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&APPID="+ weatherKey,
         method: "GET",
     
     }).then((response)=>{
-        console.log(response);
         $('#weather-feed').empty();
         let counter = 0;
-        for(let i=1; i < 6; i++){
+        for(let i=1; i < 6; i++){ //gets weather in an array at 3 hour intervals counter is used to jump to the times we need
             let day = response.list[counter];
-            
             displayForecast(day.weather[0].description,day.wind,day.main.temp,day.dt_txt,i);
             counter+=8;
         }
     });
 }
-function displayForecast(clouds, wind, temp, day, counter){
+function displayForecast(clouds, wind, temp, day, counter){ //appends forcast and highlists info for selected date
     
     let tempInF = Math.round((temp-273.15)*9/5+32);
     let tempInC = Math.round(temp - 273);
@@ -216,7 +206,7 @@ function displayForecast(clouds, wind, temp, day, counter){
     tempDOM.html(tempInF.toString()+' \u00B0 F / '+tempInC.toString()+'\u00B0 C');
 
 }
-function findWindDirection(windDeg){
+function findWindDirection(windDeg){ //find wind direction based on degrees
     let directions=['N','S','E','W','NE','NW','SE','SW'];
     let windDirection = "";
     if((windDeg >= 335.5) || (windDeg <= 22.5)){
