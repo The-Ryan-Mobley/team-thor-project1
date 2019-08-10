@@ -5,7 +5,7 @@ var longitude=-95.3694;
 var siderealTime;
 var InputDate = new Date(); //used to manipulate date
 var userDate = getTime(InputDate, 0); //defaults to todays date
-var dateindex = 1; //index for 5 day forcast
+var dateindex = 0; //index for 5 day forcast
 
 var map = L.map('map', {
     center: [latitude, longitude],
@@ -159,7 +159,7 @@ function getForecast(lat, lon){ //gets and displays the 5 day forcast
     }).then((response)=>{
         $('#weather-feed').empty();
         let counter = 0;
-        for(let i=1; i < 6; i++){ //gets weather in an array at 3 hour intervals counter is used to jump to the times we need
+        for(let i=0; i < 5; i++){ //gets weather in an array at 3 hour intervals counter is used to jump to the times we need
             let day = response.list[counter];
             displayForecast(day.weather[0].description,day.wind,day.main.temp,day.dt_txt,i);
             counter+=8;
@@ -172,6 +172,9 @@ function displayForecast(clouds, wind, temp, day, counter){ //appends forcast an
     let tempInC = Math.round(temp - 273);
     let windDirection = findWindDirection(wind.deg);
     let date = day.substr(0,10);
+    if(dateindex >= 5){
+        dateindex = 4;
+    }
 
     const weatherContainer = $('<div class="weather-div">');
     if(counter === dateindex){
@@ -186,7 +189,8 @@ function displayForecast(clouds, wind, temp, day, counter){ //appends forcast an
     cloudDOM.appendTo(weatherContainer);
     windDOM.appendTo(weatherContainer);
     tempDOM.appendTo(weatherContainer);
-    if(counter === 1){
+    if(counter === 0){
+
         cloudDOM.html("Tonights Weather: "+ clouds.toString());
     }
     else{
