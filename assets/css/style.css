@@ -16,3 +16,9 @@ div{
 .weather-div{
     text-align:left;
 }
+.main-date{
+    border-style:solid;
+    border-width:1%;
+    border-color:#0b8c10;
+
+}
