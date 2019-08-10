@@ -257,7 +257,7 @@ $("#user-btn").click(function(event){
     event.preventDefault();
     let tempDate = $("#user-date").val().trim();
     tempDate = parseInt(tempDate);
-    if(tempDate > 5){
+    if((tempDate > 5)||(tempDate<0)){
         console.log("MODAL TIME");
         $('.modal').modal();
         $('.modal').modal('open');
