@@ -1,8 +1,5 @@
-@import "susy";
-@import "compass/reset";
-.start,.twinkling.clouds{
-   
-}
+
+
 .stars {
 	z-index: 0;
 	background: #000 url('https://image.ibb.co/mjnygo/stars.png') repeat center scroll;
