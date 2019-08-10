@@ -11,3 +11,7 @@ Team Efforts: Ryan was responsible for the Weather and climate as well as misc f
 Challenges: the US Navy Observatory really likes to go down when we need it; unfortunately, the math required to do what they are doing for us is not attainable in a week.  We also had minor issues regarding which API's to use and how to organize our data.
 
 Improvements: Decoupling our app from the USNO API would massively increase reliability.  Improvements could also be made to styling/formatting/UX given further testing.
+
+Conclusion: Overall, we are happy with how this has progressed; all of our initial 'wants' for the project were satisfied and we were able to make several improvements that were not in our initial scope, such as the lunar phase image and the dynamic CSS star background.
+
+Speaking Roles: Intro(problem+solution), Who-did-what, results, challenges/improvements, conclusion, 
