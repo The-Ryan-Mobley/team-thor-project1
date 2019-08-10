@@ -1,24 +1,77 @@
-body{
-    background-image: url("../images/strgzrBG.jpg");
+@import "susy";
+@import "compass/reset";
+.start,.twinkling.clouds{
+   
+}
+.stars {
+	z-index: 0;
+	background: #000 url('https://image.ibb.co/mjnygo/stars.png') repeat center scroll;
 }
 
-div{
-    padding: 1%;
+.twinkling{
+	z-index: 1;
+	background:transparent url('https://image.ibb.co/ir1DE8/twinkling.png') repeat center scroll;
+	animation: move-twink-back 200s linear infinite;
+}
+
+.clouds{
+	z-index: 2;
+    background:transparent url('https://image.ibb.co/bT4N7T/clouds.png') repeat center scroll;
+	animation: move-clouds-back 200s linear infinite;
+}
+
+@keyframes move-twink-back {
+	from {background-position:0 0;}
+	to {background-position:-10000px 5000px;}
+}
+
+@keyframes move-clouds-back {
+	from {background-position:0 0;}
+	to {background-position:10000px 0;}
 }
 .container{
-    background-color: white;
-    height: 100%;
+    z-index: 5;
+    background-color: #7b81889c;
     width: 100%;
+    height:auto;
+    color:#ffffff;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+h1{
+    padding-top:1%;
+    margin:-1% 1% 0 0;
+}
+#header{
+    margin-top:1%;
+    line-height:10%;  
 }
 #map{
+    
     height: 400px;
+    text-shadow:none;
+    margin:1%;
+}
+.instructions{
+    font-size: 1.5em;
+}
+.validation{
+    padding:1%;
 }
 .weather-div{
     text-align:left;
+    padding:1%;
 }
 .main-date{
     border-style:solid;
     border-width:1%;
     border-color:#0b8c10;
 
+}
+.divider{
+    padding:2%;
+    background-color: #ffffff00;
 }
