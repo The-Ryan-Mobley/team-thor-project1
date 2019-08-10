@@ -57,7 +57,7 @@ h1{
     color:#ffffff;
 }
 .validation{
-    
+    width: 30%;
     padding:1%;
 }
 .weather-div{
@@ -72,6 +72,12 @@ h1{
 .divider{
     padding:2%;
     background-color: #ffffff00;
+}
+#user-btn{
+    display: none;
+}
+#user-date{
+    background-color:#7b81889f;
 }
 @media (min-width: 320px) and (max-width: 480px) {
     .head-info{
