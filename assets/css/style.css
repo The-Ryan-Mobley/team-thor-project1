@@ -28,7 +28,7 @@
 }
 .container{
     z-index: 5;
-    background-color: #7b81889c;
+    background-color: #7b818854;
     width: 100%;
     height:auto;
     color:#ffffff;
@@ -39,6 +39,7 @@
     1px 1px 0 #000;
 }
 h1{
+    text-align:center;
     padding-top:1%;
     margin:-1% 1% 0 0;
 }
@@ -53,7 +54,7 @@ h1{
     margin:1%;
 }
 .instructions{
-    font-size: 1.5em;
+    font-size: 1.3em;
     color:#ffffff;
 }
 .validation{
@@ -73,4 +74,15 @@ h1{
 .divider{
     padding:2%;
     background-color: #ffffff00;
+}
+@media (min-width: 320px) and (max-width: 480px) {
+    .head-info{
+        font-size:0.8em;
+    }
+    .instructions{
+        font-size:1em;
+    }
+    .weather-div{
+        font-size:0.8em;
+    }
 }
