@@ -30,8 +30,9 @@ popup
 
 function populatePage(){
     getForecast(latitude.toString(),longitude.toString());
-    queryIPGeo();
     queryUSNO(latitude, longitude);
+    queryIPGeo();
+    
 };
 
 
@@ -63,7 +64,24 @@ function queryUSNO(lat,lng){
     }).then(function(response){
         siderealTime=response.properties.data[0].last.split(":");
         siderealTime[siderealTime.length-1]=Math.floor(Number(siderealTime[siderealTime.length-1])).toString();
+        let riseHolder = $('<div class = "weather-div">');
+        $('#lunar-feed').empty();
+        let moonPic=$("<img src='https://api.usno.navy.mil/imagery/moon.png?date=today' class='responsive-img'>");
+        moonPic.appendTo(riseHolder);
+        riseHolder.appendTo($('#lunar-feed'));
         getskyImage(siderealTime, latitude);
+    }).catch(function(err){
+        console.log("query to USNO Failed");
+        let dummySRT = [];
+        dummySRT[0] = Math.round(longitude/15);
+        dummySRT[1] = 0;
+        dummySRT[2] = 0;
+        $('#lunar-feed').empty();
+        let riseHolder = $('<div class = "weather-div">');
+        let moonPic=$("<img src='assets/images/moon.png' class='responsive-img'>");
+        moonPic.appendTo(riseHolder);
+        riseHolder.appendTo($('#lunar-feed'));
+        getskyImage(dummySRT, latitude);
     });
 };
 function queryIPGeo(){
@@ -128,8 +146,7 @@ function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
     let moonUp = ConvertGeoTime(MoonRise);
     let moonDown = ConvertGeoTime(MoonSet);
 
-    $('#lunar-feed').empty();
-    let moonPic=$("<img src='https://api.usno.navy.mil/imagery/moon.png?date=today' class='responsive-img'>");
+
     let riseHolder = $('<div class = "weather-div">');
     let sunRiseDOM = $('<div>');
     let sunSetDOM = $('<div>');
@@ -138,7 +155,6 @@ function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
 
 
     riseHolder.appendTo($('#lunar-feed'));
-    moonPic.appendTo(riseHolder);
     sunRiseDOM.appendTo(riseHolder);
     sunSetDOM.appendTo(riseHolder);
     moonRiseDOM.appendTo(riseHolder);
