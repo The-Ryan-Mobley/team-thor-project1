@@ -8,14 +8,9 @@ var popup = L.popup();
 var latitude=29.7602;
 var longitude=-95.3694;
 var siderealTime;
-
-var userDate = new Date();
-var dd = String(userDate.getDate()).padStart(2, '0');
-var mm = String(userDate.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = userDate.getFullYear();
- userDate = mm + '/' + dd + '/' + yyyy;
-
-
+var InputDate = new Date();
+var userDate = getTime(InputDate, 0);
+var dateindex = 1;
 
 var map = L.map('map', {
     center: [latitude, longitude],
@@ -63,7 +58,7 @@ var searchControl=L.Control.geocoder({
 
 function queryUSNO(lat,lng){
     $.ajax({
-        url: "https://api.usno.navy.mil/sidtime?date=today&coords="+ lat + ","+ lng + "&time=now",
+        url: "https://api.usno.navy.mil/sidtime?date="+userDate.toString()+"&coords="+ lat + ","+ lng + "&time=now",
         method:"GET"
     }).then(function(response){
         siderealTime=response.properties.data[0].last.split(":");
@@ -72,9 +67,10 @@ function queryUSNO(lat,lng){
     });
 };
 function queryIPGeo(){
+    var geoDate = IpGeoDate(userDate);
     var geoKey= "b729dded76f84824b0ea13263979cd99";
 $.ajax({
-    url:"https://api.ipgeolocation.io/astronomy?apiKey="+geoKey+"&lat="+latitude.toString()+"&long="+longitude.toString(),
+    url:"https://api.ipgeolocation.io/astronomy?apiKey="+geoKey+"&lat="+latitude.toString()+"&long="+longitude.toString()+"&date="+geoDate,
     method:"GET",
 }).then((response)=>{
     console.log(response);
@@ -82,6 +78,13 @@ $.ajax({
     //get sunrise/sunset
 
 });
+}
+function IpGeoDate(d){
+    let yyyy = d.substr(6,4);
+    let dd = d.substr(3,2);
+    let mm = d.substr(0,2);
+    let convertedDate = yyyy + '-' + mm + '-' + dd;
+    return convertedDate;
 }
 function ConvertGeoTime(timestring){
     let standardHour = 0;
@@ -110,9 +113,14 @@ function ConvertGeoTime(timestring){
     }
     standardTime = [standardHour.toString() + extra + " " + meridian];
     return standardTime;
+}
+function getTime(d, i){
+    let dd = String(d.getDate() + i).padStart(2, '0');
+    let mm = String(d.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = d.getFullYear();
+    userDate = mm + '/' + dd + '/' + yyyy;
+    return userDate;
 
-
-    
 }
 function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){
     let sunUpStandard = ConvertGeoTime(SunRise);
@@ -167,8 +175,11 @@ function displayForecast(clouds, wind, temp, day, counter){
     let tempInC = Math.round(temp - 273);
     let windDirection = findWindDirection(wind.deg);
     let date = day.substr(0,10);
-    
+
     const weatherContainer = $('<div class="weather-div">');
+    if(counter === dateindex){
+      weatherContainer.addClass('main-date');  
+    }
     const cloudDOM = $('<div class="weather-cell">');
     const windDOM = $('<div class="weather-cell">');
     const tempDOM = $('<div class="weather-cell">');
@@ -253,14 +264,18 @@ $("#user-btn").click(function(event){
     event.preventDefault();
     let tempDate = $("#user-date").val().trim();
     tempDate = parseInt(tempDate);
-    if(tempDate>=5){
+    if(tempDate > 5){
         console.log("MODAL TIME");
         $('.modal').modal();
         $('.modal').modal('open');
     }
-    else if(tempDate<5){
-        userDate = tempDate;
+    else if(tempDate <= 5){
+        dateindex = tempDate;
+        userDate = getTime(InputDate, tempDate);
+        console.log("user date: " + userDate);
         $("#user-date").val('');
+        populatePage();
+        
     }
     
 });
