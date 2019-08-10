@@ -1,8 +1,3 @@
-//https://api.nasa.gov/planetary/apod?api_key=nUEptcB91ocekFHCzpFrc6dnWCcnRhIVaNgEVOTd
-//https://ssd-api.jpl.nasa.gov/nhats.api
-//https://www.sky-map.org/?ra=18.5&de=40&zoom=3
-//http://server1.sky-map.org/skywindow.jsp?object=M100&zoom=8&img_source=SDSS
-
 var weatherKey="40d4a57683aeb7e88b7acf955c82d2a6";
 var popup = L.popup();
 var latitude=29.7602;
@@ -35,10 +30,7 @@ function populatePage(){
     
 };
 
-
 populatePage();
-
-
 
 var searchControl=L.Control.geocoder({
     defaultMarkGeocode: false
@@ -115,7 +107,6 @@ function ConvertGeoTime(timestring){ //gets lunar time to display
     else if(uno === 0){
         standardHour = 12;
         meridian = "AM";
-
     }
     else if( uno > 12){
         standardHour = uno-12;
@@ -201,10 +192,8 @@ function displayForecast(clouds, wind, temp, day, counter){ //appends forcast an
     else{
         cloudDOM.html("Weather for "+ date+": "+ clouds.toString());
     }
-    
     windDOM.html('Wind Direction: '+windDirection+"<br>Wind Speed: "+ wind.speed+" MPH");
     tempDOM.html(tempInF.toString()+' \u00B0 F / '+tempInC.toString()+'\u00B0 C');
-
 }
 function findWindDirection(windDeg){ //find wind direction based on degrees
     let directions=['N','S','E','W','NE','NW','SE','SW'];
@@ -260,7 +249,6 @@ function onMapClick(e) {
         longitude=e.latlng.lng;
         map.setView([latitude,longitude],10);
         populatePage();    
-
 }
 
 map.on('click', onMapClick);
@@ -279,9 +267,7 @@ $("#user-btn").click(function(event){
         userDate = getTime(InputDate, tempDate);
         console.log("user date: " + userDate);
         $("#user-date").val('');
-        populatePage();
-        
+        populatePage();   
     }
-    
 });
 
