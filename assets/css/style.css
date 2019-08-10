@@ -44,7 +44,7 @@ h1{
 }
 #header{
     margin-top:1%;
-    line-height:10%;  
+  
 }
 #map{
     
@@ -54,8 +54,10 @@ h1{
 }
 .instructions{
     font-size: 1.5em;
+    color:#ffffff;
 }
 .validation{
+    
     padding:1%;
 }
 .weather-div{
