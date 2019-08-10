@@ -1,0 +1,13 @@
+Problem: I want to go stargazing, but I don't know the weather/climate/visibility and want all of info in one place.  I do NOT want to scour multiple websites for information and would like a to be able to view the conditions for multiple locations with an easy to use map.
+
+Solution: A website that combines api's from NASA affiliates, OpenWeather, the US Navy Observatory, and leaflet that allows the user to choose a location, either via clicking the map or using the search function provided.
+	Upon choosing a location, the app provides a 5 day forecast of the climate, a view of what astral bodies should be visible overhead, the approximate times of sundown, sunup, moondown, and moonup, and the current lunar phase, as an image.
+
+results: We were able to accomplish all of these goals; our app provides an easy to use map and well as search function to make finding your location easy!
+	After entering your location, an up-to-date map of the stars overhead, as well as a 5-day forecast and current lunar phase, are displayed.
+	There is also an option for the user to specify a day up to 5 days in the future to get the star map and lunar image for that day instead, as well as highlight the chosen forecast.
+Team Efforts: Ryan was responsible for the Weather and climate as well as misc fixes to all parts of the site; Bryan set up the leaflet map as well as formatting changes and finding and adapting the USNO api.  Matt was responsible for the setting up the HTML, setting up the CSS, and getting the star image formatted and working correctly, as well as misc formatting.
+
+Challenges: the US Navy Observatory really likes to go down when we need it; unfortunately, the math required to do what they are doing for us is not attainable in a week.  We also had minor issues regarding which API's to use and how to organize our data.
+
+Improvements: Decoupling our app from the USNO API would massively increase reliability.  Improvements could also be made to styling/formatting/UX given further testing.
