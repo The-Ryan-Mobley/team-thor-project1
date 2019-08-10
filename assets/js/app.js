@@ -197,8 +197,7 @@ function displayForecast(clouds, wind, temp, day, counter){
     }
     
     windDOM.html('Wind Direction: '+windDirection+"<br>Wind Speed: "+ wind.speed+" MPH");
-    tempDOM.html(tempInF.toString()+' \u00B0 F <br>'+tempInC.toString()+'\u00B0 C');
-    
+    tempDOM.html(tempInF.toString()+' \u00B0 F / '+tempInC.toString()+'\u00B0 C');
 
 }
 function findWindDirection(windDeg){

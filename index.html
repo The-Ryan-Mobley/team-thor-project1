@@ -8,8 +8,8 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-     <!--Let browser know website is optimized for mobile-->
-     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
@@ -22,64 +22,69 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row" id="header">
-            <h3>STRGZR</h3>
-           <h6>Provided by Team Thor</h6>
-           <p>Click a location on the map, or use the search button to search for a location.  The relevant climate and astrological information will be displayed below.</p>
-        </div>
-        <div class="row">
+    <div class="stars">
+        <div class="twinkling">
+            <div class="clouds">
                 <div class="divider"></div>
-            <div id="map">
-                map
-            </div>
-        </div>
-        <form role="form" class="col s6">
-                <div class="form-group">
-                  <label for="user-date">How many days in the future?(max 5):</label>
-                  <input class="form-control" id="user-date" type="number" />
+                <div class="container">
+                    <div class="row" id="header">
+                        <h1>STRGZR</h1>
+                        <h6>Provided by Team Thor</h6>
+                        <p>Click a location on the map, or use the search button to search for a location. The relevant
+                            climate and astrological information will be displayed below.</p>
+                    </div>
+                    <div class="row">
+                        <div id="map">
+                            map
+                        </div>
+                    </div>
+                    <form role="form" class="col s6 validation">
+                        <div class="form-group">
+                            <label for="user-date" class="instructions">How many days in the future?(max 5):</label>
+                            <input class="form-control" id="user-date" type="number" />
+                        </div>
+                        <button class="btn btn-default" id="user-btn" type="submit">
+                            Submit
+                        </button>
+                    </form>
+                    <div class="row">
+                        <div id="weather-feed" class="col l3 s6">
+                            weather-feed
+                        </div>
+                        <div id="lunar-feed" class="col l3 s6">
+                            lunar-feed
+                        </div>
+                        <div id="sky-images" class="col l6 s12">
+                            sky-images
+                        </div>
+                    </div>
                 </div>
-                  <button class="btn btn-default" id="user-btn" type="submit">
-                    Submit
-                  </button>
-              </form>
-        <div class="row">
+
+                <!-- Modal Structure -->
+                <div id="modal1" class="modal">
+                    <div class="modal-content">
+                        <p>Please enter a number between 1 and 5</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+                    </div>
+                </div>
                 <div class="divider"></div>
-            <div id="weather-feed" class="col l3 s6">
-                weather-feed
-            </div>
-            <div id="lunar-feed" class="col l3 s6">
-                    lunar-feed
-                </div>
-            <div id="sky-images" class="col l6 s12">
-                sky-images
             </div>
         </div>
     </div>
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-        <div class="modal-content">
-          <p>Please enter a number between 1 and 5</p>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
-        </div>
-      </div>
-              
-
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
- 
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
         crossorigin=""></script>
-        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="assets/js/app.js"></script>
