@@ -26,7 +26,7 @@ popup
 function populatePage(){
     getForecast(latitude.toString(),longitude.toString());
     queryUSNO(latitude, longitude);
-    queryIPGeo();
+    
     
 };
 
@@ -61,6 +61,7 @@ function queryUSNO(lat,lng){
         let moonPic=$("<img src='https://api.usno.navy.mil/imagery/moon.png?date=today' class='responsive-img'>");
         moonPic.appendTo(riseHolder);
         riseHolder.appendTo($('#lunar-feed'));
+        queryIPGeo();
         getskyImage(siderealTime, latitude);
     }).catch(function(err){
         console.log("query to USNO Failed");
@@ -73,6 +74,7 @@ function queryUSNO(lat,lng){
         let moonPic=$("<img src='assets/images/moon.png' class='responsive-img'>");
         moonPic.appendTo(riseHolder);
         riseHolder.appendTo($('#lunar-feed'));
+        queryIPGeo();
         getskyImage(dummySRT, latitude);
     });
 };
@@ -133,13 +135,13 @@ function GetSunMoon(SunRise,SunSet,MoonRise,MoonSet){  //appends lunar informati
     let moonUp = ConvertGeoTime(MoonRise);
     let moonDown = ConvertGeoTime(MoonSet);
 
-    let riseHolder = $('<div class = "weather-div">');
+    let riseHolder = $('#lunar-feed').children(".weather-div");
     let sunRiseDOM = $('<div>');
     let sunSetDOM = $('<div>');
     let moonRiseDOM = $('<div>');
     let moonSetDOM = $('<div>');
 
-    riseHolder.appendTo($('#lunar-feed'));
+   // riseHolder.appendTo($('#lunar-feed'));
     sunRiseDOM.appendTo(riseHolder);
     sunSetDOM.appendTo(riseHolder);
     moonRiseDOM.appendTo(riseHolder);
@@ -237,10 +239,10 @@ function getskyImage(srt, lat){
     let skyhours = srt[0];
     let skymins = srt[1];
     let skysecs = srt[2];
-    let skyqueryurl = "https://server1.sky-map.org/skywindow?ra="+skyhours+" "+skymins+" "+skysecs+"&de="+lat+" 00 00&zoom=8";
-    let imgwidth = $("#sky-images").width();
-    console.log(imgwidth);
-    let skyimg = $("<IFRAME SRC='"+skyqueryurl+" WIDTH="+imgwidth+" HEIGHT="+(imgwidth*4)/5+"' WIDTH="+imgwidth+" HEIGHT="+(imgwidth*4)/5+">    </IFRAME>");
+    let skyqueryurl = "https://server1.sky-map.org/skywindow?ra="+skyhours+" "+skymins+" "+skysecs+"&de="+lat+" 00 00&zoom=2";
+   // let imgwidth = $("#sky-images").width();
+    //console.log(imgwidth);
+    let skyimg = $("<IFRAME SRC='"+skyqueryurl+"'>    </IFRAME>");
     $("#sky-images").empty();
     $("#sky-images").append(skyimg);
 }
