@@ -172,12 +172,15 @@ function displayForecast(clouds, wind, temp, day, counter){ //appends forcast an
     let tempInC = Math.round(temp - 273);
     let windDirection = findWindDirection(wind.deg);
     let date = day.substr(0,10);
-    if(dateindex >= 5){
-        dateindex = 4;
+    if(dateindex > 5){
+        dateindex = 5;
+    }
+    else{
+        
     }
 
     const weatherContainer = $('<div class="weather-div">');
-    if(counter === dateindex){
+    if((counter+1) === dateindex){
       weatherContainer.addClass('main-date');  
     }
     const cloudDOM = $('<div class="weather-cell">');
