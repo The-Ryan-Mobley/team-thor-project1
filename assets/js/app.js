@@ -271,7 +271,7 @@ $("#user-btn").click(function(event){
         $('.modal').modal();
         $('.modal').modal('open');
     }
-    else if(tempDate <= 5){
+    else if((tempDate <= 5)&&(tempDate > 0)){
         dateindex = tempDate;
         userDate = getTime(InputDate, tempDate);
         console.log("user date: " + userDate);
