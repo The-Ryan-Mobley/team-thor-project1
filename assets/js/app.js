@@ -266,12 +266,12 @@ $("#user-btn").click(function(event){
     event.preventDefault();
     let tempDate = $("#user-date").val().trim();
     tempDate = parseInt(tempDate);
-    if((tempDate > 5)||(tempDate<0)){
+    if((tempDate > 5)||(tempDate<=0)){
         console.log("MODAL TIME");
         $('.modal').modal();
         $('.modal').modal('open');
     }
-    else if((tempDate <= 5)&&(tempDate > 0)){
+    else if((tempDate <= 5)){
         dateindex = tempDate;
         userDate = getTime(InputDate, tempDate);
         console.log("user date: " + userDate);
