@@ -1,5 +1,6 @@
 # team-thor-project1
 https://the-ryan-mobley.github.io/team-thor-project1/ url
+
 3 apis, openweather, nasa, and leaflet.
 user feeds in a location, via leaflet, that is then used to check visible astral bodies and local weather.
 app will cross check data from weather and nasa to alert user to stargazing conditions and visible things in the sky.
